@@ -42,11 +42,11 @@ button.on("click", function() {
     let response = {
         dataFiltered
     }
-    if (response.dataFiltered !== 0) {
+    if (response.dataFiltered.length !== 0) {
         addData(dataFiltered);
     }
     else {
-        tableData.append("tr").text("No sightings found for this criteria");
+        tableBody.append("tr").text("No sightings found for this criteria");
     }
 
 });
