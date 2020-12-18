@@ -15,8 +15,7 @@ const button = d3.select('#filter-btn');
 let addData = (createTable) => {
   createTable.forEach(ufo => {
       var row = tableBody.append("tr");
-      columns.forEach(column => row.append("td").text(ufo[column])
-      )
+      columns.forEach(column => row.append("td").text(ufo[column]))
   });
 }
 
@@ -25,5 +24,29 @@ addData(tableData);
 button.on("click", function() {
     d3.event.preventDefault();
 
+    tableBody.html("");
+
+    let date = inputFilterDate.property("value");
+    let city = inputFilterCity.property("value");
+    let state = inputFilterState.property("value");
+    let country = inputFilterCountry.property("value");
+    let shape = inputFilterShape.property("value");
+
+    var dataFiltered = tableData.filter(ufo => ufo.datetime === date ||
+                                        ufo.city === city ||
+                                        ufo.state === state ||
+                                        ufo.country === country ||
+                                        ufo.shape === shape);
+    addData(dataFiltered);
+    
+    let response = {
+        dataFiltered
+    }
+    if (response.dataFiltered !== 0) {
+        addData(dataFiltered);
+    }
+    else {
+        tableData.append("tr").text("No sightings found for this criteria");
+    }
 
 });
